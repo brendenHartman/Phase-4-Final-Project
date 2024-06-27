@@ -1,3 +1,5 @@
+
+
 function Car({car, handleBuy}){
     return (
         <div>

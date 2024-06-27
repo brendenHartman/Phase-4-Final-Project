@@ -31,6 +31,7 @@ class CarMeet(db.Model,SerializerMixin):
     serialize_rules = ('-drivers.car_meets', '-spots.car_meet')
 
     id = db.Column(db.Integer, primary_key = True)
+    name = db.Column(db.String)
     type = db.Column(db.String)
     start_date  = db.Column(db.String)
     end_date = db.Column(db.String)
@@ -74,6 +75,8 @@ class Driver(db.Model,SerializerMixin):
     serialize_rules = ('-cars.driver', '-car_meets.drivers', '-spots.driver')
 
     id = db.Column(db.Integer, primary_key = True)
+    password = db.Column(db.String)
+    username = db.Column(db.String)
     name = db.Column(db.String)
     color = db.Column(db.String)
 
