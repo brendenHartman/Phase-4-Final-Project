@@ -35,7 +35,9 @@ onSubmit: (values) => {
   },
 });
 
-const context = {formik}
+function handleBuy(){}
+
+const context = {formik, handleBuy}
 
 function App() {
   return (
