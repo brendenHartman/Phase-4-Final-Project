@@ -1,9 +1,6 @@
 #!/usr/bin/env python3
 
-# Standard library imports
-
-# Remote library imports
-from flask import request
+from flask import request, session
 from flask_restful import Resource
 
 
@@ -11,11 +8,6 @@ from config import app, db, api
 
 from models import Car, CarMeet, Driver
 
-
-
-@app.route('/')
-def index():
-    return '<h1>Project Server</h1>'
 
 class Cars(Resource):
     def get(self):
@@ -83,12 +75,55 @@ class DriverId(Resource):
         db.session.commit()
         return "Driver Deleted Successfuly", 204
 
+class Login(Resource):
+    def post(self):
+        driver = Driver.query.filter_by(username=request.get_json()['username']).first()
+        if driver:
+            session['driver_id'] = driver.id
+            return driver.to_dict(), 201
+        else:
+            return {'error': 'no'}, 401
 
+class CheckSession(Resource):
+    def get(self):
+        if session['driver_id']:
+            driver = Driver.query.filter_by(id = session['driver_id']).first()
+            return driver.to_dict(), 200
+        else:
+            return {'error': 'no'}, 401
+        
+class Logout(Resource):
+    def delete(self):
+        if session['driver_id']:
+            session['driver_id'] = None
+            return '', 204
+        else:
+            return {'error': 'no'}, 401 
 
-api.add_resource(Drivers, '/drivers')
+class Signup(Resource):
+    def post(self):
+        json = request.get_json()
+        if 'username' not in json:
+            return {'error': 'no username'}, 422
+        driver = Driver(
+            username = json['username'],
+            image_url = json['image_url'],
+            color = json['color'],
+        )
+        driver.password_hash = json['password']
+        db.session.add(driver)
+        db.session.commit()
+        session['driver_id'] = driver.id
+        return driver.to_dict(), 201
+
+api.add_resource(Drivers, '/drivers', endpoint='drivers')
 api.add_resource(DriverId, '/drivers/<int:id>')
-api.add_resource(Cars,'/cars')
-api.add_resource(Meets, '/meets')
+api.add_resource(Cars,'/cars', endpoint='cars')
+api.add_resource(Meets, '/meets', endpoint='meets')
+api.add_resource(Signup, '/signup', endpoint='signup')
+api.add_resource(CheckSession, '/check_session', endpoint='check_session')
+api.add_resource(Login, '/login', endpoint='login')
+api.add_resource(Logout, '/logout', endpoint='logout')
 
 
 if __name__ == '__main__':

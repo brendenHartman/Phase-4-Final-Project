@@ -3,6 +3,10 @@ import { Switch, Route } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from 'yup';
 
+const [cars, setCars] = useState([]);
+const [meets, setMeets] = useState([]);
+const [user, setUser]  = useState(null);
+
 const formSchema = yup.object().shape({
   email: yup.string().email("Invalid email").required("Must enter email"),
   username: yup.string().required('Must Enter Username').max(16).min(4), 
@@ -37,6 +41,20 @@ onSubmit: (values) => {
 
 const formik2 = useFormik({
 });
+
+useEffect(() => {
+  fetch('/cars')
+  .then((r) => r.json())
+  .then((data) => setCars(data))
+  fetch('/meets')
+  .then((r) => r.json())
+  .then((data) => setMeets(data))
+  fetch("/check_session").then((r) => {
+    if (r.ok) {
+      r.json().then((user) => setUser(user));
+    }
+  });
+},[])
 
 function handleBuy(){}
 

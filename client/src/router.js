@@ -5,7 +5,6 @@ import Home from './components/Home'
 import Drivers from './components/Drivers'
 import Cars from './components/Cars'
 import Login from './components/Login'
-import Signup from './components/Signup'
 import Meets from './components/Meets'
 
 const router = createBrowserRouter([{
@@ -15,6 +14,11 @@ const router = createBrowserRouter([{
     children: [
         {
             path: '/',
+            element: <Login/>,
+            errorElement: <Error />
+        },
+        {
+            path: '/home',
             element: <Home/>,
             errorElement: <Error />
         },
@@ -31,11 +35,6 @@ const router = createBrowserRouter([{
         {
             path: '/meets',
             element: <Meets/>,
-            errorElement: <Error />
-        },
-        {
-            path: '/login',
-            element: <Login/>,
             errorElement: <Error />
         },
     ]
