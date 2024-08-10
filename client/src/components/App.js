@@ -2,10 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Switch, Route } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from 'yup';
+import Login from './Login'
 
+
+function App(){
 const [cars, setCars] = useState([]);
 const [meets, setMeets] = useState([]);
 const [user, setUser]  = useState(null);
+const [refreshPage, setRefreshPage] = useState(false);
 
 const formSchema = yup.object().shape({
   email: yup.string().email("Invalid email").required("Must enter email"),
@@ -18,8 +22,8 @@ const formik = useFormik({
   initialValues: {
     email: "",
     username: "",
-    password:"",
-    color:'',
+    password: "",
+    color: '',
   },
   validationSchema: formSchema,
 onSubmit: (values) => {
@@ -28,10 +32,10 @@ onSubmit: (values) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(values, null, 2),
+      body: JSON.stringify(values),
     }).then(
       (res) => {
-        if (res.status == 200){
+        if (res.status === 200){
           setRefreshPage(!refreshPage)
         }
       }
@@ -42,7 +46,7 @@ onSubmit: (values) => {
 const formik2 = useFormik({
 });
 
-useEffect(() => {
+/* useEffect(() => {
   fetch('/cars')
   .then((r) => r.json())
   .then((data) => setCars(data))
@@ -54,16 +58,16 @@ useEffect(() => {
       r.json().then((user) => setUser(user));
     }
   });
-},[])
+},[]) */
 
 function handleBuy(){}
 
-const context = {formik, handleBuy, formik2, meets, handleMeet, cars}
 
-function App() {
+
+if (!user) return <Login formik={formik}/>
+
   return (
   <>
-    <Outlet context={context}/>;
   </>
   )
 }

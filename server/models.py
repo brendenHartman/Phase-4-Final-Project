@@ -76,29 +76,15 @@ class Driver(db.Model,SerializerMixin):
     serialize_rules = ('-cars.driver', '-car_meets.drivers', '-spots.driver')
 
     id = db.Column(db.Integer, primary_key = True)
-    _password_hash = db.Column(db.String)
+    email =  db.Column(db.String, nullable = False, unique = True)
     username = db.Column(db.String, nullable = False, unique = True)
-    name = db.Column(db.String)
-    image_url  = db.Column(db.String)
+    password = db.Column(db.String)
     color = db.Column(db.String)
 
     cars = db.Relationship('Car', back_populates = 'driver')
     car_meets = association_proxy('spots', 'car_meet', creator= lambda meet_obj: Spot(meet  = meet_obj))
     spots = db.Relationship('Spot', back_populates = 'driver')
-    
-    @hybrid_property
-    def password_hash(self):
-        raise AttributeError('Password hashes may not be viewed.')
 
-    @password_hash.setter
-    def password_hash(self, password):
-        password_hash = bcrypt.generate_password_hash(
-            password.encode('utf-8'))
-        self._password_hash = password_hash.decode('utf-8')
-
-    def authenticate(self, password):
-        return bcrypt.check_password_hash(
-            self._password_hash, password.encode('utf-8'))
     
     def __repr__(self):
-        return f'<Driver {self.id}, {self.name}, {self.color}>'
+        return f'<Driver {self.id}, {self}, {self.color}>'

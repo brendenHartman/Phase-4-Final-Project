@@ -43,7 +43,9 @@ class Drivers(Resource):
         return drivers, 200
     def post(self):
         driver = Driver(
-            name  = request.get_json()['name'],
+            email = request.get_json()['email'],
+            username  = request.get_json()['username'],
+            password = request.get_json()['password'],
             color = request.get_json()['color'],
         )
         db.session.add(driver)
@@ -62,7 +64,7 @@ class DriverId(Resource):
         db.session.add(driver)
         db.session.commit()
         return driver.to_dict(), 201
-    def patch(self):
+    def patch(self, id):
         driver = Driver.query.filter_by(id=id).first()
         for attr in request.get_json():
             setattr(driver, attr, request.get_json().get(attr))
@@ -73,7 +75,7 @@ class DriverId(Resource):
         driver = Driver.query.filter_by(id=id).first()
         db.session.delete(driver)
         db.session.commit()
-        return "Driver Deleted Successfuly", 204
+        return {"message": "Driver Deleted Successfuly"}, 204
 
 class Login(Resource):
     def post(self):
@@ -110,7 +112,7 @@ class Signup(Resource):
             image_url = json['image_url'],
             color = json['color'],
         )
-        driver.password_hash = json['password']
+        driver.password = json['password']
         db.session.add(driver)
         db.session.commit()
         session['driver_id'] = driver.id

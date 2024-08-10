@@ -1,37 +1,34 @@
-import {useOutletContext} from 'react-router-dom'
 import NavBar from './NavBar'
 
-const {formik, formik2} = useOutletContext()
+function Login({formik}){
 
-function Login(){
+    const onSubmit = formik.handleSubmit
+    const handleChange = formik.handleChange; 
+    const values = formik.values
     return (
-    <>
-        <NavBar/>
-        <form id="loginForm" onSubmit={formik2.handleSubmit}>
-            <input></input>
-            <p></p>
-            <input></input>
-            <p></p>
-            <input></input>
-        </form>
-        <div id="loginDivider">
-
-        </div>
-        <form id="signupForm" onSubmit={formik.handleSubmit}>
-            <input onChange={formik.handleChange} value={formik.values.email}></input>
+        <>
+          <form id="signupForm" onSubmit={onSubmit}>
+            <input id="email" onChange={handleChange} value={values.email} />
             <p>{formik.errors.email}</p>
-            <input onChange={formik.handleChange} value={formik.values.username}></input>
+            <input id="username" onChange={handleChange} value={values.username} />
             <p>{formik.errors.username}</p>
-            <input onChange={formik.handleChange} value={formik.values.password}></input>
+            <input id="password" onChange={handleChange} value={values.password} />
             <p>{formik.errors.password}</p>
-            <input onChange={formik.handleChange} value={formik.values.color}></input>
+            <input id="color" onChange={handleChange} value={values.color} />
             <p>{formik.errors.color}</p>
-            <input id="submit" type="submit">Sign up</input>
-        </form>
-    </>
+            <input id="submit" type="submit" />
+          </form> 
+      </>
     )
 }
 
 
-
+/*<form id="loginForm" onSubmit={onSubmit}>
+          <input id="username" type="text" onChange={handleChange} value={values.username} />
+          <p>{formik.errors.username}</p>
+          <input id="password" type="text" onChange={handleChange} value={values.password} />
+          <p>{formik.errors.password}</p>
+          <input type="submit" />
+        </form>
+        <div id="loginDivider"></div>*/
 export default Login
