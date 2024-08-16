@@ -1,19 +1,17 @@
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 
-function NavBar(){
+function NavBar({user}){
     return(
         <div className="navBar">
             <input id="menu button"/>
             <div id="LinkContainer">
-                <NavLink className="nav-link" to="/">Profile</NavLink>
-                <NavLink className="nav-link" to="/myTeam">Cars</NavLink>
-                <NavLink className="nav-link" to="/teams">Meets</NavLink>
+                <Link className="nav-link" to="/">Profile</Link>
+                <Link className="nav-link" to="/cars">Cars</Link>
+                <Link className="nav-link" to="/meets">Meets</Link>
             </div>
             <img></img>
-            <input id="LoginButton">
-                <img></img>
-            </input>
+            <input id="LoginButton"/>
         </div>
     );
 }

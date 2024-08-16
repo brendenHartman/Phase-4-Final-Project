@@ -50,6 +50,9 @@ class Drivers(Resource):
         )
         db.session.add(driver)
         db.session.commit()
+        session['user_id'] = driver.id
+        print(driver.id)
+        print(session['user_id'])
         return driver.to_dict(), 201
 
 class DriverId(Resource):
@@ -88,8 +91,9 @@ class Login(Resource):
 
 class CheckSession(Resource):
     def get(self):
-        if session['driver_id']:
-            driver = Driver.query.filter_by(id = session['driver_id']).first()
+        if session['user_id']:
+            driver = Driver.query.filter_by(id = session['user_id']).first()
+            print(driver)
             return driver.to_dict(), 200
         else:
             return {'error': 'no'}, 401
@@ -117,7 +121,7 @@ class Signup(Resource):
         db.session.commit()
         session['driver_id'] = driver.id
         return driver.to_dict(), 201
-
+    
 api.add_resource(Drivers, '/drivers', endpoint='drivers')
 api.add_resource(DriverId, '/drivers/<int:id>')
 api.add_resource(Cars,'/cars', endpoint='cars')
@@ -127,7 +131,7 @@ api.add_resource(CheckSession, '/check_session', endpoint='check_session')
 api.add_resource(Login, '/login', endpoint='login')
 api.add_resource(Logout, '/logout', endpoint='logout')
 
-
+app.secret_key = "ElbieJay22"
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
 

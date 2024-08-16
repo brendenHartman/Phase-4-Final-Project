@@ -1,16 +1,13 @@
 import Car from "./Car"
-import NavBar from "./NavBar"
 
-const {cars, handleBuy}  = useOutletContext()
 
-function Cars(){
+function Cars({cars, user}){
     return (
         <div>
-            <NavBar/>
             <h1>Car MarketPlace</h1>
             <label htmlFor="carsSearch"></label>
-            <input name="carsSearch" type="text" id="carsSearch"></input>
-            {cars.map((car) => {<Car car={car} handleBuy={handleBuy}/>})}
+            <input name="carsSearch" type="text" id="carsSearch"/>
+            {cars.map((car) => {<Car car={car}/>})}
         </div>
     )
 }

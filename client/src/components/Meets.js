@@ -1,13 +1,9 @@
 import Meet from "./Meet"
-import NavBar from "./NavBar"
 
-const {meets, handleMeet} = useOutletContext()
-
-function Meets(){
+function Meets({meets, user}){
     <div>
-        <NavBar/>
         <h1>Meets</h1>
-        {meets.map((meet) => <Meet meet={meet} handleBuy={handleMeet}/>)}
+        {meets.map((meet) => <Meet meet={meet}/>)}
     </div>
 }
 
