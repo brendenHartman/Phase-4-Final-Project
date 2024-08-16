@@ -87,4 +87,4 @@ class Driver(db.Model,SerializerMixin):
 
     
     def __repr__(self):
-        return f'<Driver {self.id}, {self}, {self.color}>'
+        return f'<Driver {self.id}, {self.username}, {self.color}>'

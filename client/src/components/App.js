@@ -41,7 +41,7 @@ onSubmit: (values) => {
   },
 });
 
-const formik2 = useFormik({
+const formikLog = useFormik({
 });
 
 useEffect(() => {
@@ -50,10 +50,13 @@ useEffect(() => {
       r.json().then((user) => setUser(user));
     }
   });
+  fetch('/cars')
+  .then(r  => r.json())
+  .then(data => setCars(data))
+  fetch('/meets')
+  .then(r  => r.json())
+  .then(data => setMeets(data))
 },[]) 
-
-function handleBuy(){}
-
 
 
 if (!user) return <Login formik={formik}/>

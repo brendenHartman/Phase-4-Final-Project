@@ -1,12 +1,10 @@
-function Meet({meet,handleBuy}){
+function Meet({meet}){
     return (
-        <div>
+        <div  id={meet.id}>
             <h1>{meet.name}</h1>
             <h2>{meet.type}</h2>
-            <p>Starts: {meet.start}, Ends: {meet.end}</p>
-            <input className="tickButton" onClick={handleBuy}></input>
-            <input className="tickButton" onClick={handleBuy}></input>
-            <input className="tickButton" onClick={handleBuy}></input>
+            <p>Starts: {meet.start_date}, Ends: {meet.end_date}</p>
+            <input type="button"/>
         </div>
     )
 }

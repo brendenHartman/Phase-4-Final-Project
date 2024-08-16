@@ -1,13 +1,12 @@
 
 
-function Car({car, handleBuy}){
+function Car({car}){
     return (
-        <div>
+        <div id={car.id}>
             <h1>{car.model}</h1>
             <h2>"{car.make}"</h2>
             <h2>Type: {car.type}</h2>
-            <img src={car.img}/>
-            <input onClick={handleBuy} value="Purchase"/>
+            <input type='button' value="Purchase"/>
         </div>
     )
 }
