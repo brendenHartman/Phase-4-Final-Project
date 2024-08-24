@@ -17,7 +17,7 @@ class Car(db.Model,SerializerMixin):
     type = db.Column(db.String)
 
     driver_id = db.Column(db.Integer, db.ForeignKey('drivers.id'))
-    driver = db.Relationship('Driver', back_populates = 'cars')
+    driver = db.relationship('Driver', back_populates = 'cars')
 
     def __repr__(self):
         return f'<Car {self.id}, {self.make}, {self.model}, {self.type}>'
@@ -39,7 +39,7 @@ class CarMeet(db.Model,SerializerMixin):
 
     drivers = association_proxy('spots', 'driver', creator= lambda driver_obj: Spot(driver  = driver_obj))
 
-    spots = db.Relationship('Spot', back_populates = 'car_meet')
+    spots = db.relationship('Spot', back_populates = 'car_meet')
 
     def __repr__(self):
         return f'<Meet {self.id}, {self.type}, {self.start_date} to {self.end_date}>'
@@ -58,10 +58,10 @@ class Spot(db.Model, SerializerMixin):
     reserved = db.Column(db.Boolean)
 
     driver_id = db.Column(db.Integer, db.ForeignKey('drivers.id'))
-    driver =  db.Relationship('Driver', back_populates = 'spots')
+    driver =  db.relationship('Driver', back_populates = 'spots')
 
     car_meet_id = db.Column(db.Integer, db.ForeignKey('car_meets.id'))
-    car_meet = db.Relationship('CarMeet', back_populates = 'spots')
+    car_meet = db.relationship('CarMeet', back_populates = 'spots')
 
     def __repr__(self):
         return f'<Spot {self.id}, {self.grade}, {self.driver_id}, {self.car_meet_id}>'
@@ -81,9 +81,9 @@ class Driver(db.Model,SerializerMixin):
     password = db.Column(db.String)
     color = db.Column(db.String)
 
-    cars = db.Relationship('Car', back_populates = 'driver')
+    cars = db.relationship('Car', back_populates = 'driver')
     car_meets = association_proxy('spots', 'car_meet', creator= lambda meet_obj: Spot(meet  = meet_obj))
-    spots = db.Relationship('Spot', back_populates = 'driver')
+    spots = db.relationship('Spot', back_populates = 'driver')
 
     
     def __repr__(self):

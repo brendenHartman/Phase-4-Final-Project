@@ -1,24 +1,6 @@
-import MyCars from "./MyCars"
-import MyMeets from "./MyMeets"
-import Car from './Car'
-import Spot from './Spot'
-import { useEffect, useState } from "react";
 
-function Home({user}){
-    const [myMeets, setMyMeets]= useState([]);
-    const [myCars, setMyCars]= useState([]);
-    const garage  = <div><p>No Cars In Your Garage</p></div>
-    const spots = <div><p>No Spots Reserved</p></div>
+function Home({user, garage, spots}){
 
-    useEffect(()  => {
-        console.log(user)
-        if(user.cars.isEmpty === false){
-            garage = user.cars.map((car) => <Car car={car}/>)
-        }
-        if(user.spots.isEmpty  === false){
-            spots = user.spots.map((spot)=> <Spot spot={spot}/>)
-        }
-    }, [])
 
     return (
     <div id="home_page">

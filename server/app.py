@@ -23,6 +23,11 @@ class Cars(Resource):
         db.session.commit()
         return car.to_dict(), 201
     
+class CarsId(Resource):
+    def get(self,id):
+        car = Car.query.filter_by(id=id).first().to_dict()
+        return car, 200
+    
 class Meets(Resource):
     def get(self):
         meets = [meet.to_dict() for meet in CarMeet.query.all()]
@@ -69,11 +74,23 @@ class DriverId(Resource):
         return driver.to_dict(), 201
     def patch(self, id):
         driver = Driver.query.filter_by(id=id).first()
-        for attr in request.get_json():
-            setattr(driver, attr, request.get_json().get(attr))
-            db.session.add(driver)
+        car_id = request.get_json()['car_id']
+        meet_id = request.get_json()['meet_id']
+        car = Car.query.filter_by(id=car_id).first()
+        meet = Meets.query.filter_by(id=meet_id).first()
+        if car:
+            print(car)
+            print(driver)
+            print(driver.cars)
+            driver.cars.append(car)
             db.session.commit()
-            return driver.to_dict(), 200
+            return driver.to_dict(),200
+        elif meet:
+            print(meet)
+            print(driver)
+            print(driver.spots)
+        else:
+            return {'error':'no'}, 404
     def delete(self, id):
         driver = Driver.query.filter_by(id=id).first()
         db.session.delete(driver)
@@ -124,6 +141,7 @@ class Signup(Resource):
     
 api.add_resource(Drivers, '/drivers', endpoint='drivers')
 api.add_resource(DriverId, '/drivers/<int:id>')
+api.add_resource(CarsId, '/cars/<int:id>')
 api.add_resource(Cars,'/cars', endpoint='cars')
 api.add_resource(Meets, '/meets', endpoint='meets')
 api.add_resource(Signup, '/signup', endpoint='signup')
