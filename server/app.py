@@ -75,9 +75,9 @@ class DriverId(Resource):
     def patch(self, id):
         driver = Driver.query.filter_by(id=id).first()
         car_id = request.get_json()['car_id']
-        meet_id = request.get_json()['meet_id']
+        #meet_id = request.get_json()['meet_id']
         car = Car.query.filter_by(id=car_id).first()
-        meet = Meets.query.filter_by(id=meet_id).first()
+        #meet = CarMeet.query.filter_by(id=meet_id).first()
         if car:
             print(car)
             print(driver)
@@ -85,10 +85,10 @@ class DriverId(Resource):
             driver.cars.append(car)
             db.session.commit()
             return driver.to_dict(),200
-        elif meet:
-            print(meet)
-            print(driver)
-            print(driver.spots)
+        #elif meet:
+          #  print(meet)
+          #  print(driver)
+            #print(driver.spots)
         else:
             return {'error':'no'}, 404
     def delete(self, id):

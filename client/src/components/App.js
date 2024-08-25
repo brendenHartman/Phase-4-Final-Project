@@ -53,41 +53,43 @@ useEffect(() => {
     if (r.ok) {
       r.json()
       .then((user) => setUser(user))
-      .then(() => setMyCars(user.cars.map((car)  => <Car id={car.id} car={car} text='Remove' handleClick={handleRemove}/>)))
+      .then(() => {
+        console.log(user)
+        if(user && user.cars){ 
+            setMyCars(user.cars.map((car)  => <Car id={car.id} car={car} text='Remove' handleClick={handleRemove}/>))
+          }
+        }
+      )
     }
   });
   fetch('/cars')
   .then(r  => r.json())
-  .then(data => setCars(data))
+  .then(data => setCars(data.filter((car) => car.driver_id === null)))
   fetch('/meets')
   .then(r  => r.json())
   .then(data => setMeets(data))
-},[]) 
+},[myCars, cars]) 
 
 
 if (!user) return <Login formik={formik}/>
 
 function handleRemove(event){
-  console.log('remove')
+  
 }
 
 function handleBuy(event){
   const carId = event.target.parentElement.id
-  fetch(`/cars/${carId}`)
-  .then(r =>  r.json())
-  .then(car => {
-    console.log(user)
-    console.log(user.cars)
-    fetch(`/drivers/${user.id}`, {
-      method: 'PATCH',
-      headers: {'Content-Type': 'application/json'},
-      body:  JSON.stringify({car_id: carId})
-    }
-    )
-    .then(r => r.json()) 
-    .then(data => {setMyCars(user.cars.map((car)  => <Car id={carId} car={car} text='Remove' handleClick={handleRemove}/>))
-      console.log(data)
-    })
+  fetch(`/drivers/${user.id}`, {
+    method: 'PATCH',
+    headers: {'Content-Type': 'application/json'},
+    body:  JSON.stringify({car_id: carId})
+  }
+  )
+  .then(r => r.json()) 
+  .then(data => {
+    setMyCars(user.cars.map((car)  => <Car id={carId} car={car} text='Remove' handleClick={handleRemove}/>))
+    setCars(cars.filter((car) => car.id !== carId))
+    console.log(data)
   })
 }
 
