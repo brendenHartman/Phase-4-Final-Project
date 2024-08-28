@@ -13,9 +13,10 @@ import NavBar from './NavBar';
 function App(){
 const [cars, setCars] = useState([]);
 const [meets, setMeets] = useState([]);
-const [user, setUser]  = useState(null);
-const [myMeets, setMyMeets]= useState([]);
-const [myCars, setMyCars]= useState([<p>No Cars, Buy Cars And They Will Appear Here!</p>]);
+const [user, setUser] = useState(null);
+const [myMeets, setMyMeets] = useState([]);
+const [myCars, setMyCars] = useState([<p>No Cars, Buy Cars And They Will Appear Here!</p>]);
+const [reload, setReload] = useState(false)
 
 const formSchema = yup.object().shape({
   email: yup.string().email("Invalid email").required("Must enter email"),
@@ -52,14 +53,12 @@ useEffect(() => {
   fetch("/check_session").then((r) => {
     if (r.ok) {
       r.json()
-      .then((user) => setUser(user))
-      .then(() => {
-        console.log(user)
+      .then((user) => {
+        setUser(user)
         if(user && user.cars){ 
-            setMyCars(user.cars.map((car)  => <Car id={car.id} car={car} text='Remove' handleClick={handleRemove}/>))
-          }
+          setMyCars(user.cars.map((car)  => <Car key={car.id} id={car.id} car={car} text='Remove' handleClick={handleRemove}/>))
         }
-      )
+      })
     }
   });
   fetch('/cars')
@@ -68,13 +67,28 @@ useEffect(() => {
   fetch('/meets')
   .then(r  => r.json())
   .then(data => setMeets(data))
-},[myCars, cars]) 
-
+},[reload]) 
 
 if (!user) return <Login formik={formik}/>
 
 function handleRemove(event){
-  
+  const carId = event.target.parentElement.id
+  fetch(`/drivers/${user.id}`, {
+    method: 'PATCH',
+    headers: {'Content-Type': 'application/json'},
+    body:  JSON.stringify({
+      car_id: carId,
+      task: 'sellC'
+    })
+  }
+  )
+  .then(r => r.json()) 
+  .then(data => {
+    setMyCars(user.cars.map((car)  => <Car key={car.id} id={car.id} car={car} text='Remove' handleClick={handleRemove}/>))
+    setCars(cars.filter((car) => car.id !== carId))
+    setReload(!reload)
+    console.log(data)
+  })
 }
 
 function handleBuy(event){
@@ -82,13 +96,17 @@ function handleBuy(event){
   fetch(`/drivers/${user.id}`, {
     method: 'PATCH',
     headers: {'Content-Type': 'application/json'},
-    body:  JSON.stringify({car_id: carId})
+    body:  JSON.stringify({
+      car_id: carId,
+      task: 'addC'
+    })
   }
   )
   .then(r => r.json()) 
   .then(data => {
-    setMyCars(user.cars.map((car)  => <Car id={carId} car={car} text='Remove' handleClick={handleRemove}/>))
+    setMyCars(user.cars.map((car)  => <Car key={car.id} id={car.id} car={car} text='Remove' handleClick={handleRemove}/>))
     setCars(cars.filter((car) => car.id !== carId))
+    setReload(!reload)
     console.log(data)
   })
 }
@@ -98,10 +116,14 @@ function handleReserve(event){
   fetch(`/drivers/${user.id}`, {
     method: 'PATCH',
     headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({meet_id: meetId})
+    body: JSON.stringify({
+      meet_id: meetId,
+      task: 'addM'
+    })
   })
   .then(r => r.json())
-  .then(data => {setMyMeets(user.spots)
+  .then(data => {
+    setMyMeets(user.spots)
     console.log(data)})
 }
 

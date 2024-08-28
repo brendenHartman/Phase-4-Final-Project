@@ -15,6 +15,7 @@ if __name__ == '__main__':
     with app.app_context():
         print("Starting seed...")
         Driver.query.delete()
+        Car.query.delete()
         cars =  []
         mustang  = Car(make="make",model="model",type="type")
         cars.append(mustang)

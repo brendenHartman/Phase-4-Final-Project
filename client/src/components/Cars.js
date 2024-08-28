@@ -7,7 +7,7 @@ function Cars({cars, user, handleClick}){
             <h1>Car MarketPlace</h1>
             <label htmlFor="carsSearch"></label>
             <input name="carsSearch" type="text" id="carsSearch"/>
-            {cars.map((car) => <Car id={car.id} car={car} text={'Purchase'} handleClick={handleClick}/>)}
+            {cars.map((car) => <Car key={car.id} id={car.id} car={car} text={'Purchase'} handleClick={handleClick}/>)}
         </div>
     )
 }

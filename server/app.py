@@ -6,7 +6,7 @@ from flask_restful import Resource
 
 from config import app, db, api
 
-from models import Car, CarMeet, Driver
+from models import Car, CarMeet, Driver, Spot
 
 
 class Cars(Resource):
@@ -74,23 +74,46 @@ class DriverId(Resource):
         return driver.to_dict(), 201
     def patch(self, id):
         driver = Driver.query.filter_by(id=id).first()
-        car_id = request.get_json()['car_id']
-        #meet_id = request.get_json()['meet_id']
-        car = Car.query.filter_by(id=car_id).first()
-        #meet = CarMeet.query.filter_by(id=meet_id).first()
-        if car:
-            print(car)
-            print(driver)
-            print(driver.cars)
-            driver.cars.append(car)
-            db.session.commit()
-            return driver.to_dict(),200
-        #elif meet:
-          #  print(meet)
-          #  print(driver)
-            #print(driver.spots)
+        task = request.get_json()['task']
+        if task == 'addC':
+            car_id = request.get_json()['car_id']
+            car = Car.query.filter_by(id=car_id).first()
+            if car:
+                print(car)
+                print(driver)
+                print(driver.cars)
+                driver.cars.append(car)
+                db.session.commit()
+                return driver.to_dict(),200
+        elif task == 'sellC':
+            car_id = request.get_json()['car_id']
+            car = Car.query.filter_by(id=car_id).first()
+            if car:
+                print(car)
+                print(driver)
+                print(driver.cars)
+                driver.cars.remove(car)
+                db.session.commit()
+                return driver.to_dict(),200
+        elif task == 'addM':
+            meet_id = request.get_json()['meet_id']
+            meet = CarMeet.query.filter_by(id=meet_id).first()
+            if meet:
+                spot = Spot(driver=driver, car_meet=meet)
+                db.session.add(spot)
+                db.session.commit()
+                return driver.to_dict(), 200
+        elif task == 'leaveM':
+            meet_id = request.get_json()['meet_id']
+            meet = CarMeet.query.filter_by(id=meet_id).first()
+            if meet:
+                spot = Spot.query.filter_by(driver_id=driver.id, car_meet_id=meet.id).first()
+                if spot:
+                    db.session.delete(spot)
+                    db.session.commit()
+                return driver.to_dict(), 200
         else:
-            return {'error':'no'}, 404
+            return {'error': 'no'}, 404
     def delete(self, id):
         driver = Driver.query.filter_by(id=id).first()
         db.session.delete(driver)
