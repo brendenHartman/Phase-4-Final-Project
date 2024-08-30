@@ -1,6 +1,7 @@
+import Car from "./Car"
+import Spot from "./Spot"
 
-function Home({user, garage, spots}){
-
+function Home({user, garage, spots, handleRemove}){
 
     return (
     <div key="home_page">
@@ -12,11 +13,11 @@ function Home({user, garage, spots}){
         </div>
         <div key="dividerHomeTop"></div>
         <div key="garageSec"> 
-            {garage}
+            {garage.map((car)  => <Car key={car.id} id={car.id} car={car} text='Remove' handleClick={handleRemove}/>)}
         </div>
         <div key="dividerHomeBottom"></div>
         <div key="meetsSec">
-            {spots}
+            {spots.map()}
         </div>
     </div>
     )

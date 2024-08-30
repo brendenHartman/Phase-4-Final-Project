@@ -4,8 +4,6 @@ import { useFormik } from "formik";
 import * as yup from 'yup';
 import Login from './Login';
 import Home from './Home';
-import Car from "./Car";
-import Spot from "./Spot";
 import Cars from './Cars';
 import Meets from './Meets';
 import NavBar from './NavBar';
@@ -15,7 +13,7 @@ const [cars, setCars] = useState([]);
 const [meets, setMeets] = useState([]);
 const [user, setUser] = useState(null);
 const [myMeets, setMyMeets] = useState([]);
-const [myCars, setMyCars] = useState([<p>No Cars, Buy Cars And They Will Appear Here!</p>]);
+const [myCars, setMyCars] = useState([]);
 const [reload, setReload] = useState(false)
 
 const formSchema = yup.object().shape({
@@ -56,7 +54,7 @@ useEffect(() => {
       .then((user) => {
         setUser(user)
         if(user && user.cars){ 
-          setMyCars(user.cars.map((car)  => <Car key={car.id} id={car.id} car={car} text='Remove' handleClick={handleRemove}/>))
+          setMyCars(user.cars)
         }
       })
     }
@@ -84,11 +82,15 @@ function handleRemove(event){
   )
   .then(r => r.json()) 
   .then(data => {
-    setMyCars(user.cars.map((car)  => <Car key={car.id} id={car.id} car={car} text='Remove' handleClick={handleRemove}/>))
+    setMyCars(user.cars)
     setCars(cars.filter((car) => car.id !== carId))
     setReload(!reload)
     console.log(data)
   })
+}
+
+function handleLeave(event){
+  const meetId = event.target.parentElement.id
 }
 
 function handleBuy(event){
@@ -104,7 +106,7 @@ function handleBuy(event){
   )
   .then(r => r.json()) 
   .then(data => {
-    setMyCars(user.cars.map((car)  => <Car key={car.id} id={car.id} car={car} text='Remove' handleClick={handleRemove}/>))
+    setMyCars(user.cars)
     setCars(cars.filter((car) => car.id !== carId))
     setReload(!reload)
     console.log(data)
@@ -132,7 +134,7 @@ function handleReserve(event){
     <NavBar user={user}/>
     <Switch>
       <Route exact path="/">
-        <Home  user={user} garage={myCars} spots={myMeets}/>
+        <Home  user={user} garage={myCars} spots={myMeets} handleRemove={handleRemove} handleLeave={handleLeave}/>
       </Route>
       <Route exact path="/cars">
         <Cars cars={cars} user={user} handleClick={handleBuy}/>
