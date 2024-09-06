@@ -1,10 +1,14 @@
-import NavBar from './NavBar'
 
-function Login({formik}){
+function Login({formik, formik2}){
 
     const onSubmit = formik.handleSubmit
     const handleChange = formik.handleChange; 
     const values = formik.values
+
+    const values2  = formik2.values
+    const onSubmit2 = formik2.handleSubmit
+    const handleChange2 = formik2.handleChange; 
+    
     return (
         <>
           <form id="signupForm" onSubmit={onSubmit}>
@@ -18,6 +22,14 @@ function Login({formik}){
             <p>{formik.errors.color}</p>
             <input id="submit" type="submit" />
           </form> 
+          <p>Already Have An Account? Login Below!</p>
+          <form id='loginForm' onSubmit={onSubmit2}>
+            <input id="username" onChange={handleChange2} value={values2.username} />
+            <p>{formik2.errors.username}</p>
+            <input id="password" onChange={handleChange2} value={values2.password} />
+            <p>{formik2.errors.password}</p>
+            <input id="submit" type="submit" />
+          </form>
       </>
     )
 }

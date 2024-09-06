@@ -23,6 +23,11 @@ const formSchema = yup.object().shape({
   color: yup.string().optional(),
 });
 
+const formSchema2 = yup.object().shape({
+  username: yup.string().required('Must Enter Username').max(16).min(4), 
+  password: yup.string().required('Must Enter Password').max(16).min(8),
+});
+
 const formik = useFormik({
   initialValues: {
     email: "",
@@ -40,11 +45,30 @@ onSubmit: (values) => {
       body: JSON.stringify(values),
     })
     .then(res => res.json())
-    .then(data  => setUser(data))
+    .then(data  => {if(data){
+      console.log(user)
+      setUser(data)
+    }})
   },
 });
 
 const formikLog = useFormik({
+  initialValues: {
+    username: "",
+    password: "",
+  },
+  validationSchema: formSchema2,
+onSubmit: (values) => {
+    fetch("/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    })
+    .then(res => res.json())
+    .then(data  => setUser(data))
+  },
 });
 
 useEffect(() => {
@@ -54,7 +78,9 @@ useEffect(() => {
       .then((user) => {
         setUser(user)
         if(user && user.cars){ 
+          console.log(user)
           setMyCars(user.cars)
+          setMyMeets(user.spots)
         }
       })
     }
@@ -66,8 +92,6 @@ useEffect(() => {
   .then(r  => r.json())
   .then(data => setMeets(data))
 },[reload]) 
-
-if (!user) return <Login formik={formik}/>
 
 function handleRemove(event){
   const carId = event.target.parentElement.id
@@ -91,6 +115,19 @@ function handleRemove(event){
 
 function handleLeave(event){
   const meetId = event.target.parentElement.id
+  fetch(`/drivers/${user.id}`, {
+    method: 'PATCH',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      meet_id: meetId,
+      task: 'leaveM'
+    })
+  })
+  .then(r => r.json())
+  .then(data => {
+    setMyMeets(user.spots)
+    setReload(!reload)
+    console.log(data)})
 }
 
 function handleBuy(event){
@@ -126,12 +163,25 @@ function handleReserve(event){
   .then(r => r.json())
   .then(data => {
     setMyMeets(user.spots)
+    setReload(!reload)
     console.log(data)})
 }
 
+  function handleSignout(){
+    fetch('/logout',{
+      method: 'DELETE',
+    })
+    .then(r => r.json())
+    .then(data => {
+      setUser(null)
+    })
+  }
+
+  if (!user) return <Login formik={formik} formik2={formikLog}/>
+
   return (
   <>
-    <NavBar user={user}/>
+    <NavBar user={user} handleClick={handleSignout}/>
     <Switch>
       <Route exact path="/">
         <Home  user={user} garage={myCars} spots={myMeets} handleRemove={handleRemove} handleLeave={handleLeave}/>
@@ -140,7 +190,7 @@ function handleReserve(event){
         <Cars cars={cars} user={user} handleClick={handleBuy}/>
       </Route>
       <Route exact path='/meets'>
-        <Meets meets={meets} user={user}handleReserve={handleReserve}/>
+        <Meets meets={meets} user={user} handleReserve={handleReserve}/>
       </Route>
     </Switch>
   </>

@@ -8,14 +8,16 @@ from faker import Faker
 
 # Local imports
 from app import app
-from models import db, Driver, Car, CarMeet
+from models import db, Driver, Car, CarMeet, Spot
 
 if __name__ == '__main__':
     fake = Faker()
     with app.app_context():
         print("Starting seed...")
         Driver.query.delete()
+        CarMeet.query.delete()
         Car.query.delete()
+        Spot.query.delete()
         cars =  []
         mustang  = Car(make="make",model="model",type="type")
         cars.append(mustang)

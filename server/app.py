@@ -46,19 +46,26 @@ class Drivers(Resource):
     def get(self):
         drivers = [driver.to_dict() for driver in Driver.query.all()]
         return drivers, 200
+
     def post(self):
-        driver = Driver(
-            email = request.get_json()['email'],
-            username  = request.get_json()['username'],
-            password = request.get_json()['password'],
-            color = request.get_json()['color'],
-        )
-        db.session.add(driver)
-        db.session.commit()
-        session['user_id'] = driver.id
-        print(driver.id)
-        print(session['user_id'])
-        return driver.to_dict(), 201
+        email = request.get_json()['email']
+        driverExist = Driver.query.filter_by(email=email).first()
+
+        if driverExist:
+            return {'error': 'email in use'}, 401
+        else: 
+            driver = Driver(
+                email=request.get_json()['email'],
+                username=request.get_json()['username'],
+                password=request.get_json()['password'],
+                color=request.get_json()['color'],
+            )
+            db.session.add(driver)
+            db.session.commit()
+            session['user_id'] = driver.id
+            print(driver.id)
+            print(session['user_id'])
+            return driver.to_dict(), 201
 
 class DriverId(Resource):
     def get(self,id):
@@ -99,7 +106,7 @@ class DriverId(Resource):
             meet_id = request.get_json()['meet_id']
             meet = CarMeet.query.filter_by(id=meet_id).first()
             if meet:
-                spot = Spot(driver=driver, car_meet=meet)
+                spot = Spot(driver=driver, car_meet=meet, grade=1, reserved=True)
                 db.session.add(spot)
                 db.session.commit()
                 return driver.to_dict(), 200
@@ -107,7 +114,7 @@ class DriverId(Resource):
             meet_id = request.get_json()['meet_id']
             meet = CarMeet.query.filter_by(id=meet_id).first()
             if meet:
-                spot = Spot.query.filter_by(driver_id=driver.id, car_meet_id=meet.id).first()
+                spot = Spot.query.filter_by(driver_id=driver.id).first()
                 if spot:
                     db.session.delete(spot)
                     db.session.commit()
@@ -140,34 +147,18 @@ class CheckSession(Resource):
         
 class Logout(Resource):
     def delete(self):
-        if session['driver_id']:
+        if 'driver_id' in session and session['driver_id']:
             session['driver_id'] = None
             return '', 204
         else:
-            return {'error': 'no'}, 401 
+            return {'error': 'no'}, 401
 
-class Signup(Resource):
-    def post(self):
-        json = request.get_json()
-        if 'username' not in json:
-            return {'error': 'no username'}, 422
-        driver = Driver(
-            username = json['username'],
-            image_url = json['image_url'],
-            color = json['color'],
-        )
-        driver.password = json['password']
-        db.session.add(driver)
-        db.session.commit()
-        session['driver_id'] = driver.id
-        return driver.to_dict(), 201
     
 api.add_resource(Drivers, '/drivers', endpoint='drivers')
 api.add_resource(DriverId, '/drivers/<int:id>')
 api.add_resource(CarsId, '/cars/<int:id>')
 api.add_resource(Cars,'/cars', endpoint='cars')
 api.add_resource(Meets, '/meets', endpoint='meets')
-api.add_resource(Signup, '/signup', endpoint='signup')
 api.add_resource(CheckSession, '/check_session', endpoint='check_session')
 api.add_resource(Login, '/login', endpoint='login')
 api.add_resource(Logout, '/logout', endpoint='logout')

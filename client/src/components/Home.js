@@ -1,7 +1,7 @@
 import Car from "./Car"
 import Spot from "./Spot"
 
-function Home({user, garage, spots, handleRemove}){
+function Home({user, garage, spots, handleRemove, handleLeave}){
 
     return (
     <div key="home_page">
@@ -17,7 +17,7 @@ function Home({user, garage, spots, handleRemove}){
         </div>
         <div key="dividerHomeBottom"></div>
         <div key="meetsSec">
-            {spots.map()}
+            {spots.map(spot  => <Spot key={spot.id} id={spot.id} spot={spot} handleClick={handleLeave}/>)}
         </div>
     </div>
     )

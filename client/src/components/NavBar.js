@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 
-function NavBar({user}){
+function NavBar({user, handleClick}){
     return(
         <div className="navBar">
             <input id="menu button"/>
@@ -10,8 +10,7 @@ function NavBar({user}){
                 <Link className="nav-link" to="/cars">Cars</Link>
                 <Link className="nav-link" to="/meets">Meets</Link>
             </div>
-            <img></img>
-            <input id="LoginButton"/>
+            <input id="signoutButton" type="button" onClick={handleClick}/>
         </div>
     );
 }
