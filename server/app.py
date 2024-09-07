@@ -131,7 +131,7 @@ class Login(Resource):
     def post(self):
         driver = Driver.query.filter_by(username=request.get_json()['username']).first()
         if driver:
-            session['driver_id'] = driver.id
+            session['user_id'] = driver.id
             return driver.to_dict(), 201
         else:
             return {'error': 'no'}, 401
@@ -147,8 +147,8 @@ class CheckSession(Resource):
         
 class Logout(Resource):
     def delete(self):
-        if 'driver_id' in session and session['driver_id']:
-            session['driver_id'] = None
+        if session['user_id']:
+            session['user_id'] = None
             return '', 204
         else:
             return {'error': 'no'}, 401

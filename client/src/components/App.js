@@ -173,6 +173,7 @@ function handleReserve(event){
     })
     .then(r => r.json())
     .then(data => {
+      console.log(data)
       setUser(null)
     })
   }
