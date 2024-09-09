@@ -12,8 +12,6 @@ function App(){
 const [cars, setCars] = useState([]);
 const [meets, setMeets] = useState([]);
 const [user, setUser] = useState(null);
-const [myMeets, setMyMeets] = useState([]);
-const [myCars, setMyCars] = useState([]);
 const [reload, setReload] = useState(false)
 
 const formSchema = yup.object().shape({
@@ -79,8 +77,6 @@ useEffect(() => {
         setUser(user)
         if(user && user.cars){ 
           console.log(user)
-          setMyCars(user.cars)
-          setMyMeets(user.spots)
         }
       })
     }
@@ -106,7 +102,6 @@ function handleRemove(event){
   )
   .then(r => r.json()) 
   .then(data => {
-    setMyCars(user.cars)
     setCars(cars.filter((car) => car.id !== carId))
     setReload(!reload)
     console.log(data)
@@ -125,7 +120,6 @@ function handleLeave(event){
   })
   .then(r => r.json())
   .then(data => {
-    setMyMeets(user.spots)
     setReload(!reload)
     console.log(data)})
 }
@@ -143,7 +137,6 @@ function handleBuy(event){
   )
   .then(r => r.json()) 
   .then(data => {
-    setMyCars(user.cars)
     setCars(cars.filter((car) => car.id !== carId))
     setReload(!reload)
     console.log(data)
@@ -162,7 +155,6 @@ function handleReserve(event){
   })
   .then(r => r.json())
   .then(data => {
-    setMyMeets(user.spots)
     setReload(!reload)
     console.log(data)})
 }
@@ -181,7 +173,7 @@ function handleReserve(event){
     <NavBar user={user} handleClick={handleSignout}/>
     <Switch>
       <Route exact path="/">
-        <Home  user={user} garage={myCars} spots={myMeets} handleRemove={handleRemove} handleLeave={handleLeave}/>
+        <Home  user={user} handleRemove={handleRemove} handleLeave={handleLeave}/>
       </Route>
       <Route exact path="/cars">
         <Cars cars={cars} user={user} handleClick={handleBuy}/>
