@@ -149,7 +149,7 @@ class Logout(Resource):
     def delete(self):
         if session['user_id']:
             session['user_id'] = None
-            return '', 204
+            return 204
         else:
             return {'error': 'no'}, 401
 

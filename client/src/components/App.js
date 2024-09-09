@@ -171,11 +171,7 @@ function handleReserve(event){
     fetch('/logout',{
       method: 'DELETE',
     })
-    .then(r => r.json())
-    .then(data => {
-      console.log(data)
-      setUser(null)
-    })
+    .then(setUser(null))
   }
 
   if (!user) return <Login formik={formik} formik2={formikLog}/>
