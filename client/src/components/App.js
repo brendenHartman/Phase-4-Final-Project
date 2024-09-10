@@ -166,6 +166,28 @@ function handleReserve(event){
     .then(setUser(null))
   }
 
+  function handleColor(event){
+    const newColor = event.target.id
+    console.log(newColor)
+    console.log(user.id)
+    console.log(JSON.stringify({
+      color: newColor,
+      task: 'changeC'
+    }))
+    fetch(`/drivers/${user.id}`, {
+      method: 'PATCH',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        color: newColor,
+        task: 'changeC'
+      })
+    })
+    .then(r => r.json())
+    .then(data => {
+      setReload(!reload)
+      console.log(data)})
+  }
+
   if (!user) return <Login formik={formik} formik2={formikLog}/>
 
   return (
@@ -173,7 +195,7 @@ function handleReserve(event){
     <NavBar user={user} handleClick={handleSignout}/>
     <Switch>
       <Route exact path="/">
-        <Home  user={user} handleRemove={handleRemove} handleLeave={handleLeave}/>
+        <Home  user={user} handleRemove={handleRemove} handleLeave={handleLeave} handleColor={handleColor}/>
       </Route>
       <Route exact path="/cars">
         <Cars cars={cars} user={user} handleClick={handleBuy}/>

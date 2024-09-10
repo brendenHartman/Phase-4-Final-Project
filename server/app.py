@@ -119,13 +119,21 @@ class DriverId(Resource):
                     db.session.delete(spot)
                     db.session.commit()
                 return driver.to_dict(), 200
+        elif task == 'changeC':
+            color = request.get_json()['color']
+            print(color)
+            driver = Driver.query.filter_by(id=id).first()
+            print(driver)
+            driver.color = color
+            db.session.commit()
+            return driver.to_dict(),  200
         else:
             return {'error': 'no'}, 404
     def delete(self, id):
         driver = Driver.query.filter_by(id=id).first()
         db.session.delete(driver)
         db.session.commit()
-        return {"message": "Driver Deleted Successfuly"}, 204
+        return  204
 
 class Login(Resource):
     def post(self):
