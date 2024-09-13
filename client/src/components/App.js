@@ -18,7 +18,7 @@ const formSchema = yup.object().shape({
   email: yup.string().email("Invalid email").required("Must enter email"),
   username: yup.string().required('Must Enter Username').max(16).min(4), 
   password: yup.string().required('Must Enter Password').max(16).min(8),
-  color: yup.string().optional(),
+  color: yup.string().default('white').optional(),
 });
 
 const formSchema2 = yup.object().shape({
@@ -42,11 +42,16 @@ onSubmit: (values) => {
       },
       body: JSON.stringify(values),
     })
-    .then(res => res.json())
+    .then(res => {
+      if(res.ok){
+        return res.json()
+      }
+    })
     .then(data  => {if(data){
       console.log(user)
       setUser(data)
     }})
+    .catch(error => console.log(error))
   },
 });
 
@@ -64,8 +69,13 @@ onSubmit: (values) => {
       },
       body: JSON.stringify(values),
     })
-    .then(res => res.json())
+    .then(res => {
+      if (res.ok){
+        return res.json()
+      }
+    })
     .then(data  => setUser(data))
+    .catch(error => console.log(error))
   },
 });
 
@@ -79,14 +89,17 @@ useEffect(() => {
           console.log(user)
         }
       })
+      .catch(error => console.log(error))
     }
   });
   fetch('/cars')
   .then(r  => r.json())
   .then(data => setCars(data.filter((car) => car.driver_id === null)))
+  .catch(error => console.log(error))
   fetch('/meets')
   .then(r  => r.json())
   .then(data => setMeets(data))
+  .catch(error => console.log(error))
 },[reload]) 
 
 function handleRemove(event){
@@ -122,6 +135,7 @@ function handleLeave(event){
   .then(data => {
     setReload(!reload)
     console.log(data)})
+  .catch(error => console.log(error))
 }
 
 function handleBuy(event){
@@ -141,6 +155,7 @@ function handleBuy(event){
     setReload(!reload)
     console.log(data)
   })
+  .catch(error => console.log(error))
 }
 
 function handleReserve(event){
