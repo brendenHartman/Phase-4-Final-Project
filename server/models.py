@@ -36,6 +36,9 @@ class CarMeet(db.Model,SerializerMixin):
     type = db.Column(db.String)
     start_date  = db.Column(db.String)
     end_date = db.Column(db.String)
+    tier_1_tickets = db.Column(db.Integer)
+    tier_2_tickets = db.Column(db.Integer)
+    tier_3_tickets = db.Column(db.Integer)
 
     drivers = association_proxy('spots', 'driver', creator= lambda driver_obj: Spot(driver  = driver_obj))
 
