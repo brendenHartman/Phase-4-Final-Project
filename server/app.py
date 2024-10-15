@@ -49,12 +49,21 @@ class MeetsId(Resource):
         meet = CarMeet.query.filter_by(id=id).first()
         if task == 'buy':
             if tier == "1":
-                meet.tier_1_tickets = meet.tier_1_tickets - 1
-                print(meet.tier_1_tickets)
+                if meet.tier_1_tickets > 0:
+                    meet.tier_1_tickets = meet.tier_1_tickets - 1
+                    print(meet.tier_1_tickets)
+                else: 
+                    return {'error': 'Tier One Tickets Are Sold Out For This Event'}, 404
             elif tier == "2":
-               meet.tier_2_tickets = meet.tier_2_tickets - 1
+                if meet.tier_2_tickets > 0:
+                    meet.tier_2_tickets = meet.tier_2_tickets - 1
+                else: 
+                    return {'error': 'Tier Two Tickets Are Sold Out For This Event'}, 404
             elif tier == "3":
-                meet.tier_3_tickets = meet.tier_3_tickets - 1
+                if meet.tier_3_tickets > 0:
+                    meet.tier_3_tickets = meet.tier_3_tickets - 1
+                else: 
+                    return {'error': 'Tier Three Tickets Are Sold Out For This Event'}, 404
         db.session.commit()
         return  meet.to_dict(), 200
     
@@ -123,14 +132,22 @@ class DriverId(Resource):
             meet = CarMeet.query.filter_by(id=meet_id).first()
             if meet:
                 tier  = request.get_json()['tier']
-                spot = Spot(driver=driver, car_meet=meet, grade=tier, reserved=True)
-                db.session.add(spot)
-                db.session.commit()
+                if tier == "1" and meet.tier_1_tickets > 0:
+                    spot = Spot(driver=driver, car_meet=meet, grade=tier, reserved=True)
+                    db.session.add(spot)
+                    db.session.commit()
+                if tier == "2" and meet.tier_2_tickets > 0:
+                    spot = Spot(driver=driver, car_meet=meet, grade=tier, reserved=True)
+                    db.session.add(spot)
+                    db.session.commit()
+                if tier == "3" and meet.tier_3_tickets > 0:
+                    spot = Spot(driver=driver, car_meet=meet, grade=tier, reserved=True)
+                    db.session.add(spot)
+                    db.session.commit()
                 return driver.to_dict(), 200
         elif task == 'leaveM':
             spot_id = request.get_json()['spot_id']
             spot = Spot.query.filter_by(id=spot_id).first()
-            print(spot)
             if spot:
                 db.session.delete(spot)
                 db.session.commit()
