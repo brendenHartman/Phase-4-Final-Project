@@ -122,12 +122,12 @@ function handleRemove(event){
 }
 
 function handleLeave(event){
-  const meetId = event.target.parentElement.id
+  const spotId = event.target.parentElement.id
   fetch(`/drivers/${user.id}`, {
     method: 'PATCH',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({
-      meet_id: meetId,
+      spot_id: spotId,
       task: 'leaveM'
     })
   })
@@ -160,11 +160,23 @@ function handleBuy(event){
 
 function handleReserve(event){
   const meetId = event.target.parentElement.id
+  const tier  = event.target.id
+  fetch(`/meets/${meetId}`, {
+    method: 'PATCH',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      task: 'buy',
+      tier: `${tier}`,
+    })
+  })
+  .then(r => r.json())
+  .then(data  => console.log(data))
   fetch(`/drivers/${user.id}`, {
     method: 'PATCH',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({
       meet_id: meetId,
+      tier: `${tier}`,
       task: 'addM'
     })
   })

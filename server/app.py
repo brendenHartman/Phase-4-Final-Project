@@ -42,6 +42,22 @@ class Meets(Resource):
         db.session.commit()
         return meet.to_dict(), 201
     
+class MeetsId(Resource):
+    def patch(self,id):
+        task = request .get_json()['task']
+        tier = request.get_json()['tier']
+        meet = CarMeet.query.filter_by(id=id).first()
+        if task == 'buy':
+            if tier == "1":
+                meet.tier_1_tickets = meet.tier_1_tickets - 1
+                print(meet.tier_1_tickets)
+            elif tier == "2":
+               meet.tier_2_tickets = meet.tier_2_tickets - 1
+            elif tier == "3":
+                meet.tier_3_tickets = meet.tier_3_tickets - 1
+        db.session.commit()
+        return  meet.to_dict(), 200
+    
 class Drivers(Resource):
     def get(self):
         drivers = [driver.to_dict() for driver in Driver.query.all()]
@@ -106,19 +122,19 @@ class DriverId(Resource):
             meet_id = request.get_json()['meet_id']
             meet = CarMeet.query.filter_by(id=meet_id).first()
             if meet:
-                spot = Spot(driver=driver, car_meet=meet, grade=1, reserved=True)
+                tier  = request.get_json()['tier']
+                spot = Spot(driver=driver, car_meet=meet, grade=tier, reserved=True)
                 db.session.add(spot)
                 db.session.commit()
                 return driver.to_dict(), 200
         elif task == 'leaveM':
-            meet_id = request.get_json()['meet_id']
-            meet = CarMeet.query.filter_by(id=meet_id).first()
-            if meet:
-                spot = Spot.query.filter_by(driver_id=driver.id).first()
-                if spot:
-                    db.session.delete(spot)
-                    db.session.commit()
-                return driver.to_dict(), 200
+            spot_id = request.get_json()['spot_id']
+            spot = Spot.query.filter_by(id=spot_id).first()
+            print(spot)
+            if spot:
+                db.session.delete(spot)
+                db.session.commit()
+            return driver.to_dict(), 200
         elif task == 'changeC':
             color = request.get_json()['color']
             print(color)
@@ -165,6 +181,7 @@ class Logout(Resource):
 api.add_resource(Drivers, '/drivers', endpoint='drivers')
 api.add_resource(DriverId, '/drivers/<int:id>')
 api.add_resource(CarsId, '/cars/<int:id>')
+api.add_resource(MeetsId, '/meets/<int:id>')
 api.add_resource(Cars,'/cars', endpoint='cars')
 api.add_resource(Meets, '/meets', endpoint='meets')
 api.add_resource(CheckSession, '/check_session', endpoint='check_session')
