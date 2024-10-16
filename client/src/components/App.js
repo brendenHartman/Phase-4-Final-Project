@@ -123,9 +123,11 @@ function handleRemove(event){
 
 function handleLeave(event){
   const spotId = event.target.parentElement.id
-  const tier = event.target.parentElement.tier
-  const meet  = event.target.parentElement.meet
-  console.log(tier)
+  const tier = event.target.parentElement.getAttribute('tier')
+  const meet  = event.target.parentElement.getAttribute('meet')
+  console.log(meet)
+  console.log(spotId)
+  console.log(event.target.parentElement)
   fetch(`/drivers/${user.id}`, {
     method: 'PATCH',
     headers: {'Content-Type': 'application/json'},

@@ -146,10 +146,19 @@ class DriverId(Resource):
                     db.session.commit()
                 return driver.to_dict(), 200
         elif task == 'leaveM':
+            tier = request.get_json()['tier']
+            meet_id  = request.get_json()['meet']
+            meet = CarMeet.query.filter_by(id=meet_id).first()
             spot_id = request.get_json()['spot_id']
             spot = Spot.query.filter_by(id=spot_id).first()
             if spot:
                 db.session.delete(spot)
+                if tier == '1':
+                    meet.tier_1_tickets += 1
+                if tier == '2':
+                    meet.tier_2_tickets += 1
+                if tier == '3':
+                    meet.tier_3_tickets += 1
                 db.session.commit()
             return driver.to_dict(), 200
         elif task == 'changeC':
@@ -208,4 +217,3 @@ api.add_resource(Logout, '/logout', endpoint='logout')
 app.secret_key = "ElbieJay22"
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
-
