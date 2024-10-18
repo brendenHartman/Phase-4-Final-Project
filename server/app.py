@@ -34,9 +34,11 @@ class Meets(Resource):
         return meets, 200
     def post(self):
         meet = CarMeet(
+            name = request.get_json()['name'],
             type = request.get_json()['type'],
-            start_date = request.get_json()['start_date'],
-            end_date = request.get_json()['end_date'],
+            tier_1_tickets = request.get_json()['tier1'],
+            tier_2_tickets = request.get_json()['tier2'],
+            tier_3_tickets = request.get_json()['tier3'],
         )
         db.session.add(meet)
         db.session.commit()

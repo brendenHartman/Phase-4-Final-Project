@@ -34,8 +34,6 @@ class CarMeet(db.Model,SerializerMixin):
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String)
     type = db.Column(db.String)
-    start_date  = db.Column(db.String)
-    end_date = db.Column(db.String)
     tier_1_tickets = db.Column(db.Integer)
     tier_2_tickets = db.Column(db.Integer)
     tier_3_tickets = db.Column(db.Integer)

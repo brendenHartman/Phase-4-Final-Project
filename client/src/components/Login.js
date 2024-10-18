@@ -1,12 +1,12 @@
 
 function Login({formik, formik2}){
 
-    const onSubmit = formik.handleSubmit
+    const onSubmit = formik.handleSubmit;
     const handleChange = formik.handleChange; 
-    const values = formik.values
+    const values = formik.values;
 
-    const values2  = formik2.values
-    const onSubmit2 = formik2.handleSubmit
+    const values2  = formik2.values;
+    const onSubmit2 = formik2.handleSubmit;
     const handleChange2 = formik2.handleChange; 
     
     return (
@@ -34,13 +34,4 @@ function Login({formik, formik2}){
     )
 }
 
-
-/*<form id="loginForm" onSubmit={onSubmit}>
-          <input id="username" type="text" onChange={handleChange} value={values.username} />
-          <p>{formik.errors.username}</p>
-          <input id="password" type="text" onChange={handleChange} value={values.password} />
-          <p>{formik.errors.password}</p>
-          <input type="submit" />
-        </form>
-        <div id="loginDivider"></div>*/
 export default Login

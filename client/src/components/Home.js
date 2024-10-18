@@ -1,5 +1,6 @@
 import Car from "./Car"
 import Spot from "./Spot"
+import CarForm from "./CarForm"
 
 function Home({user, handleRemove, handleLeave, handleColor}){
 

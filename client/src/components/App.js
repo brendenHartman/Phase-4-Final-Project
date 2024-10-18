@@ -26,6 +26,20 @@ const formSchema2 = yup.object().shape({
   password: yup.string().required('Must Enter Password').max(16).min(8),
 });
 
+const formSchemaCar = yup.object().shape({
+  make: yup.string().required("Car Must Have A Type").max(10).min(3),
+  model: yup.string().required('Car Must Have A Model').max(16).min(3),
+  type: yup.string().required("Car Must Have A Type")
+})
+
+const formSchemaMeet = yup.object().shape({
+  name:  yup.string().required('Event Must Have A Name').max(30).min(3),
+  type: yup.string().required("Event Must Have A Type"),
+  tier1: yup.number().required('Event Must Have Some Tier 1 Tickets').max(100).min(1),
+  tier2: yup.number().required('Event Must Have Some Tier 2 Tickets').max(100).min(1),
+  tier3: yup.number().required('Event Must Have Some Tier 3 Tickets').max(100).min(1),
+})
+
 const formik = useFormik({
   initialValues: {
     email: "",
@@ -75,6 +89,58 @@ onSubmit: (values) => {
       }
     })
     .then(data  => setUser(data))
+    .catch(error => console.log(error))
+  },
+});
+
+const  formikCar = useFormik(  {
+  initialValues: {
+    make: "",
+    model: "",
+    type: "",
+  },
+  validationSchema: formSchemaCar,
+  onSubmit: (values) => {
+    fetch("/cars", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    })
+    .then(res => {
+      if (res.ok){
+        return res.json()
+      }
+    })
+    .then(data  => setReload(!reload))
+    .catch(error => console.log(error))
+  },
+});
+
+const  formikMeet = useFormik(  {
+  initialValues: {
+    name: "",
+    type: "",
+    tier1: '',
+    tier2: '',
+    tier3: '',
+  },
+  validationSchema: formSchemaMeet,
+  onSubmit: (values) => {
+    fetch("/meets", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    })
+    .then(res => {
+      if (res.ok){
+        return res.json()
+      }
+    })
+    .then(data  => setReload(!reload))
     .catch(error => console.log(error))
   },
 });
@@ -232,10 +298,10 @@ function handleReserve(event){
         <Home  user={user} handleRemove={handleRemove} handleLeave={handleLeave} handleColor={handleColor}/>
       </Route>
       <Route exact path="/cars">
-        <Cars cars={cars} user={user} handleClick={handleBuy}/>
+        <Cars cars={cars} user={user} handleClick={handleBuy} formikCar={formikCar}/>
       </Route>
       <Route exact path='/meets'>
-        <Meets meets={meets} user={user} handleReserve={handleReserve}/>
+        <Meets meets={meets} user={user} handleReserve={handleReserve}  formikMeet={formikMeet}/>
       </Route>
     </Switch>
   </>
