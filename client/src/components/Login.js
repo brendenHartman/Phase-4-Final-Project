@@ -18,7 +18,19 @@ function Login({formik, formik2}){
             <p>{formik.errors.username}</p>
             <input id="password" onChange={handleChange} value={values.password} />
             <p>{formik.errors.password}</p>
-            <input id="color" onChange={handleChange} value={values.color} />
+            <select id='color' onChange={handleChange} value={values.color}>
+                    <option value='White' label='White'>White</option>
+                    <option value='Red' label='Red'>Red</option>
+                    <option value='Orange' label='Orange'>Orange</option>
+                    <option value='Yellow' label='Yellow'>Yellow</option>
+                    <option value='Green' label='Green'>Green</option>
+                    <option value='Teal' label='Teal'>Teal</option>
+                    <option value='Blue' label='Blue'>Blue</option>
+                    <option value='Purple' label='Purple'>Purple</option>
+                    <option value='Pink' label='Pink'>Pink</option>
+                    <option value='Gray' label='Gray'>Gray</option>
+                    <option value='Black' label='Black'>Black</option>
+            </select>
             <p>{formik.errors.color}</p>
             <input id="submit" type="submit" />
           </form> 

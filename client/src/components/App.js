@@ -168,6 +168,14 @@ useEffect(() => {
   .catch(error => console.log(error))
 },[reload]) 
 
+function handleDelete(event){
+  fetch(`/drivers/${user.id}`,{
+    method: 'DELETE',
+  })
+  .then(r => r.json())
+  .then(data => setUser(null))
+}
+
 function handleRemove(event){
   const carId = event.target.parentElement.id
   fetch(`/drivers/${user.id}`, {
@@ -292,7 +300,7 @@ function handleReserve(event){
 
   return (
   <>
-    <NavBar user={user} handleClick={handleSignout}/>
+    <NavBar user={user} handleClick={handleSignout} handleDelete={handleDelete}/>
     <Switch>
       <Route exact path="/">
         <Home  user={user} handleRemove={handleRemove} handleLeave={handleLeave} handleColor={handleColor}/>
