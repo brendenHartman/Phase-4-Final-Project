@@ -10,13 +10,15 @@ function Login({formik, formik2}){
     const handleChange2 = formik2.handleChange; 
     
     return (
-        <>
+        <div id='loginScreen'>
+          <h1 id='loginTitle'>Welcome to Aqua's Car Company</h1>
           <form id="signupForm" onSubmit={onSubmit}>
-            <input id="email" onChange={handleChange} value={values.email} />
+            <h4 id='signUpTitle'>SignUp Here</h4>
+            <input id="email" className='signInput' onChange={handleChange} value={values.email} />
             <p>{formik.errors.email}</p>
-            <input id="username" onChange={handleChange} value={values.username} />
+            <input id="username" className='signInput' onChange={handleChange} value={values.username} />
             <p>{formik.errors.username}</p>
-            <input id="password" onChange={handleChange} value={values.password} />
+            <input id="password" className='signInput' onChange={handleChange} value={values.password} />
             <p>{formik.errors.password}</p>
             <select id='color' onChange={handleChange} value={values.color}>
                     <option value='White' label='White'>White</option>
@@ -34,15 +36,15 @@ function Login({formik, formik2}){
             <p>{formik.errors.color}</p>
             <input id="submit" type="submit" />
           </form> 
-          <p>Already Have An Account? Login Below!</p>
+          <h4 id='loginNotice'>Already Have An Account? Login Below!</h4>
           <form id='loginForm' onSubmit={onSubmit2}>
-            <input id="username" onChange={handleChange2} value={values2.username} />
+            <input id="username" className='logInput' onChange={handleChange2} value={values2.username} />
             <p>{formik2.errors.username}</p>
-            <input id="password" onChange={handleChange2} value={values2.password} />
+            <input id="password" className='logInput' onChange={handleChange2} value={values2.password} />
             <p>{formik2.errors.password}</p>
             <input id="submit" type="submit" />
           </form>
-      </>
+      </div>
     )
 }
 
