@@ -19,6 +19,7 @@ body {
   padding: 0;
   margin: 0;
   position: absolute;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 #navBar {
@@ -38,6 +39,7 @@ body {
   justify-items: center;
   align-content: space-around;
   background-color: rgba(44, 161, 161, 0.726);
+  background-image: url('https://marketplace.canva.com/EAFCO6pfthY/1/0/1600w/canva-blue-green-watercolor-linktree-background-F2CyNS5sQdM.jpg');
 }
 
 #signupForm {
@@ -49,7 +51,7 @@ body {
 #signupForm p {
   height: 15px;
   color:  red;
-  margin: 5px;
+  margin: 0px;
   justify-self: center;
   position: relative;
 }
@@ -58,8 +60,9 @@ body {
   font-size: 20px;
   width: 350px;
   height: 25px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   margin-top: 15px;
+  background-color: rgb(221, 221, 221);
 }
 
 #loginTitle{
@@ -73,6 +76,7 @@ body {
   font-size: 20px;
   height: 35px;
   justify-self: center;
+  background-color: rgb(221, 221, 221);
 }
 
 #signupForm #submit{
@@ -80,6 +84,7 @@ body {
   font-size: 25px;
   width: 125px;
   justify-self: center;
+  background-color: rgb(221, 221, 221);
 }
 
 #signUpTitle{
@@ -99,6 +104,7 @@ body {
   font-size: 25px;
   width: 125px;
   justify-self: center;
+  background-color: rgb(221, 221, 221);
 }
 #loginForm p {
   height: 15px;
@@ -114,10 +120,41 @@ body {
   height: 25px;
   margin-bottom: 10px;
   margin-top: 15px;
+  background-color: rgb(221, 221, 221);
 }
 
 #loginForm {
   width: 100%;
   display: grid;
   justify-content: center;
+}
+
+label {
+  font-size: 20px;
+  font-weight: 900;
+}
+
+#colorLabel {
+  justify-self: center;
+  margin-bottom: 10px;
+}
+
+.loginDivider{
+  height: 3px;
+  width: 102%;
+  background-color: black;
+}
+
+#loginBackground{
+  width: 70%;
+  height: 100%;
+  position: absolute;
+  z-index: 0;
+  background-color: rgb(43, 156, 141);
+  justify-self: center;
+  border-radius: 10px;
+}
+
+#loginTitle, .loginDivider, #signupForm, #loginNotice, #loginForm {
+  z-index: 1; 
 }
