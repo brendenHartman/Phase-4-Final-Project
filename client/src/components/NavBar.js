@@ -5,11 +5,13 @@ function NavBar({user, handleClick, handleDelete}){
     return(
         <div className="navBar" id='navBar' style={{background: user.color}}>
             <div id="LinkContainer">
-                <Link className="nav-link" to="/">Profile</Link>
+                <label id='profileLabel' htmlFor="ProfileLink" value='Go-to:'>Go to:</label>
+                <Link id='ProfileLink' className="nav-link" to="/">Profile</Link>
                 <Link className="nav-link" to="/cars">Cars</Link>
                 <Link className="nav-link" to="/meets">Meets</Link>
             </div>
-            <input id="signoutButton" type="button" value='Signout' onClick={handleClick}/>
+            <label id='orLabel' htmlFor="logoutButton" value='Or'>Or</label>
+            <input id="logoutButton" type="button" value='Logout' onClick={handleClick}/>
             <input id='deleteAcountButton' type='button' value='delete account' onClick={handleDelete}/>
         </div>
     );
