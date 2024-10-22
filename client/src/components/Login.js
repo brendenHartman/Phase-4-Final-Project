@@ -37,7 +37,6 @@ function Login({formik, formik2}){
                     <option value='Purple' label='Purple'>Purple</option>
                     <option value='Pink' label='Pink'>Pink</option>
                     <option value='Gray' label='Gray'>Gray</option>
-                    <option value='Black' label='Black'>Black</option>
             </select>
             <p>{formik.errors.color}</p>
             <input id="submit" type="submit" />
