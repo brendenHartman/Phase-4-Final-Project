@@ -32,7 +32,6 @@ function Login({formik, formik2}){
                     <option value='Orange' label='Orange'>Orange</option>
                     <option value='Yellow' label='Yellow'>Yellow</option>
                     <option value='Green' label='Green'>Green</option>
-                    <option value='Teal' label='Teal'>Teal</option>
                     <option value='Blue' label='Blue'>Blue</option>
                     <option value='Purple' label='Purple'>Purple</option>
                     <option value='Pink' label='Pink'>Pink</option>
