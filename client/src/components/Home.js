@@ -1,6 +1,5 @@
 import Car from "./Car"
 import Spot from "./Spot"
-import CarForm from "./CarForm"
 
 function Home({user, handleRemove, handleLeave, handleColor}){
 
@@ -22,13 +21,19 @@ function Home({user, handleRemove, handleLeave, handleColor}){
                 <input id='Gray' style={{background: 'gray'}} type='button' onClick={handleColor}/>
             </div>
         </div>
-        <div id="dividerHomeTop"></div>
+        <div id="dividerHomeTop" style={{background: user.color}}></div>
         <div id="garageSec"> 
-            {user.cars.map((car)  => <Car key={car.id} id={car.id} car={car} text='Remove' handleClick={handleRemove}/>)}
+            <h2 id='carTitle' style={{background: user.color}}>Cars You Own Will Appear Here!</h2>
+            <div id='carGrid'>
+                {user.cars.map((car)  => <Car key={car.id} id={car.id} car={car} text='Remove' handleClick={handleRemove}  color='red'/>)}
+            </div>
         </div>
-        <div id="dividerHomeBottom"></div>
+        <div id="dividerHomeBottom" style={{background: user.color}}></div>
         <div id="meetsSec">
-            {user.spots.map(spot  => <Spot key={spot.id} id={spot.id} spot={spot} handleClick={handleLeave}/>)}
+            <h2 id='meetTitle' style={{background: user.color}}>Your Reserved Spots Will Appear Here!</h2>
+            <div id='meetGrid'>
+                {user.spots.map(spot  => <Spot key={spot.id} id={spot.id} spot={spot} handleClick={handleLeave}/>)}
+            </div>
         </div>
     </div>
     )

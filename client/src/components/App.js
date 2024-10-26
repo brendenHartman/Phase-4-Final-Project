@@ -27,7 +27,7 @@ const formSchema2 = yup.object().shape({
 });
 
 const formSchemaCar = yup.object().shape({
-  make: yup.string().required("Car Must Have A Type").max(10).min(3),
+  make: yup.string().required("Car Must Have A Make").max(10).min(3),
   model: yup.string().required('Car Must Have A Model').max(16).min(3),
   type: yup.string().required("Car Must Have A Type")
 })

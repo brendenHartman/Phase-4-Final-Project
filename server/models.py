@@ -57,6 +57,7 @@ class Spot(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key = True)
     grade = db.Column(db.Integer)
     reserved = db.Column(db.Boolean)
+    meet_name = db.Column(db.String)
 
     driver_id = db.Column(db.Integer, db.ForeignKey('drivers.id'))
     driver =  db.relationship('Driver', back_populates = 'spots')

@@ -5,11 +5,11 @@ function CarForm({formikCar}){
     const handleChange  = formikCar.handleChange
 
     return (
-        <div>
+        <div id="carFormDiv">
             <form id="carForm" onSubmit={handleSubmit}>
-                <input id='make' onChange={handleChange} value={values.make}/>
+                <input className='carFormInput' id='make' onChange={handleChange} value={values.make}/>
                 <p>{formik.errors.make}</p>
-                <input id='model' onChange={handleChange} value={values.model}/>
+                <input className='carFormInput' id='model' onChange={handleChange} value={values.model}/>
                 <p>{formik.errors.model}</p>
                 <select id='type' onChange={handleChange} value={values.type}>
                     <option value='Muscle' label='Muscle'>Muscle</option>
@@ -20,7 +20,7 @@ function CarForm({formikCar}){
                     <option value='Sport' label='Sport'>Sport</option>
                 </select>
                 <p>{formik.errors.type}</p>
-                <input id="submit" type="submit" />
+                <input className='submitCar' id="submit" type="submit" value='Create'/>
             </form>
         </div>
     )

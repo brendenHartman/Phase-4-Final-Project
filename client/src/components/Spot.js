@@ -1,9 +1,10 @@
 function Spot({spot, handleClick}){
     return (
         <div id={spot.id}  tier={spot.grade} meet={spot.car_meet_id}>
-            <p>car meet # {spot.car_meet_id}</p>
-            <p>driver #{spot.driver_id}</p>
-            <input type='button' value='Leave Meet' onClick={handleClick}/>
+            <h1 className="meetTitleSpot">Car Meet:</h1>
+            <h1 className="meetNameSpot">"{spot.meet_name}"</h1>
+            <h3 className="spotTier">Tier: {spot.grade}</h3>
+            <input className='leaveButton' type='button' value='Leave Meet' onClick={handleClick}/>
         </div>
     )
 }

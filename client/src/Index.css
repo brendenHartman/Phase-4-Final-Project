@@ -154,6 +154,7 @@ label {
 }
 
 #navBar {
+  z-index: 1;
   width: 100%;
   height: 15%;
   position: fixed;
@@ -227,12 +228,10 @@ label {
 }
 
 #home_page{
-  height: 100%;
-  width: 100%;
   display: flex;
-  justify-content: center;
   flex-direction: column;
-  margin-top: 9%;
+  flex-wrap: wrap;
+  width: 100%;
   background-color: rgb(43, 156, 141);
 }
 
@@ -246,7 +245,7 @@ label {
 }
 
 #userGreeting{
-  margin-top: 30px;
+  margin-top: 12%;
   font-size: 60px;
 }
 
@@ -283,14 +282,282 @@ label {
   margin: 30px;
 }
 
-#dividerHomeTop{
+#dividerHomeTop, #dividerHomeBottom, #dividerCar, #dividerMeet{
   width: 100%;
   height: 5px;
-  margin-top: 5px;
-  background-color: black;
+  border: 5px solid black;
 }
 
 #garageSec{
   width: 100%;
+  background-color: rgb(43, 156, 141);
+  margin-top: 0px;
+}
+
+#carTitle, #meetTitle{
+  font-size: 40px;
+  justify-self: center;
+  border-radius: 10px;
+  border: 5px solid black;
+}
+
+#carGrid, #meetGrid, #marketGrid, #meetsGrid{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+#carGrid > *{
+  height: 300px;
+  width:  400px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  border: 5px solid black;
+  display: flex; 
+  flex-direction: column;
+  align-items: center;
+  background-color: rgb(33, 124, 112);
+}
+
+.removeButton{
+  height: 40px;
+  text-align: center;
+  border-radius: 10px;
+  border: 5px solid black;
+}
+
+#meetGrid > *{
+  height: 300px;
+  width:  400px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  border: 5px solid black;
+  display: flex; 
+  flex-direction: column;
+  align-items: center;
+  background-color: rgb(33, 124, 112);
+  font-size: 20px;
+}
+
+.leaveButton{
+  height: 40px;
+  text-align: center;
+  border-radius: 10px;
+  border: 5px solid black;
+  background-color: red;
+  font-family: 'Lucida Sans';
+}
+
+.meetTitleSpot{
+  font-size: 30px;
+}
+
+.meetNameSpot{
+  font-size: 25px;
+}
+
+#meetsSec{
+  width: 100%;
+  background-color: rgb(43, 156, 141);
+}
+
+#cars{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  background-color: rgb(43, 156, 141);
+}
+
+#marketTitle{
+  font-size: 50px;
+  margin-top: 12%;
+}
+
+#marketGrid > *{
+  height: 300px;
+  width:  400px;
+  margin-top: 60px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  border: 5px solid black;
+  display: flex; 
+  flex-direction: column;
+  align-items: center;
+  background-color: rgb(33, 124, 112);
+}
+
+#carForm{
+  width: 100%;
+  height: 100%;
+  display: flex; 
+  flex-direction: column;
+  align-items: center;
+}
+
+#carFormDiv{
+  width: 100%;
+  height: 100%;
+  display: flex; 
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 60px;
+}
+
+#carForm p{
+  height: 25px;
+  color:  red;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  justify-self: center;
+  position: relative;
+}
+
+.carFormInput{
+  font-size: 20px;
+  width: 350px;
+  height: 25px;
+  margin-bottom: 5px;
   margin-top: 5px;
+  background-color: rgb(221, 221, 221);
+}
+
+#carForm #submit{
+  margin-top: 20px;
+  font-size: 25px;
+  width: 125px;
+  justify-self: center;
+  background-color: rgb(221, 221, 221);
+}
+
+#marketTitle{
+  border-radius: 10px;
+  border: 5px solid black;
+}
+
+#carForm select{
+  width: 100px;
+  font-size: 20px;
+  height: 35px;
+  justify-self: center;
+  background-color: rgb(221, 221, 221);
+}
+
+#marketTitleBottom{
+  text-align: center;
+  width: 150px;
+  font-size: 40px;
+  margin-top: 60px;
+  border-radius: 10px;
+  border: 5px solid black;
+  z-index: 0;
+}
+
+#meets{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  background-color: rgb(43, 156, 141);
+}
+
+#meetsTitle{
+  font-size: 50px;
+  margin-top: 12%;
+}
+
+#meetsGrid > *{
+  width: 35%;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  border: 5px solid black;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  outline: 5px solid rgb(58, 58, 58);
+}
+
+.meetType{
+  margin: 0;
+
+}
+
+.tierButton{ 
+  margin-bottom: 10px;
+  margin-top: 10px;
+  background-color: rgb(58, 58, 58);
+  color: white;
+  border-radius: 10px;
+}
+
+
+#meetForm{
+  width: 100%;
+  height: 100%;
+  display: flex; 
+  flex-direction: column;
+  align-items: center;
+}
+
+#meetFormDiv{
+  width: 100%;
+  height: 100%;
+  display: flex; 
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 60px;
+}
+
+#meetForm p{
+  height: 25px;
+  color:  red;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  justify-self: center;
+  position: relative;
+}
+
+.meetFormInput{
+  font-size: 20px;
+  width: 350px;
+  height: 25px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  background-color: rgb(221, 221, 221);
+}
+
+#meetForm #submit{
+  margin-top: 20px;
+  font-size: 25px;
+  width: 125px;
+  justify-self: center;
+  background-color: rgb(221, 221, 221);
+}
+
+#meetsTitle{
+  border-radius: 10px;
+  border: 5px solid black;
+}
+
+#meetForm select{
+  width: 100px;
+  font-size: 20px;
+  height: 35px;
+  justify-self: center;
+  background-color: rgb(221, 221, 221);
+}
+
+#meetsTitleBottom{
+  text-align: center;
+  width: 150px;
+  font-size: 40px;
+  margin-top: 60px;
+  border-radius: 10px;
+  border: 5px solid black;
+  z-index: 0;
 }

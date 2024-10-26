@@ -5,9 +5,9 @@ function MeetForm({formikMeet}){
     const handleChange  = formikMeet.handleChange
 
     return (
-        <div>
+        <div id='meetFormDiv'>
             <form id="meetForm" onSubmit={handleSubmit}>
-                <input id='name' onChange={handleChange} value={values.make}/>
+                <input className='meetFormInput' id='name' onChange={handleChange} value={values.make}/>
                 <p>{formik.errors.name}</p>
                 <select id='type' onChange={handleChange} value={values.type}>
                     <option value='Muscle' label='Muscle'>Muscle</option>
@@ -18,13 +18,13 @@ function MeetForm({formikMeet}){
                     <option value='Sport' label='Sport'>Sport</option>
                 </select>
                 <p>{formik.errors.type}</p>
-                <input id='tier1' onChange={handleChange} value={values.model}/>
+                <input className='meetFormInput' id='tier1' onChange={handleChange} value={values.model}/>
                 <p>{formik.errors.tier1}</p>
-                <input id='tier2' onChange={handleChange} value={values.model}/>
+                <input className='meetFormInput' id='tier2' onChange={handleChange} value={values.model}/>
                 <p>{formik.errors.tier2}</p>
-                <input id='tier3' onChange={handleChange} value={values.model}/>
+                <input className='meetFormInput' id='tier3' onChange={handleChange} value={values.model}/>
                 <p>{formik.errors.tier3}</p>
-                <input id="submit" type="submit" />
+                <input value='Create' id="submit" type="submit" />
             </form>
         </div>
     )
