@@ -204,7 +204,7 @@ class Logout(Resource):
             return 204
         else:
             return {'error': 'no'}, 401
-
+    
     
 api.add_resource(Drivers, '/drivers', endpoint='drivers')
 api.add_resource(DriverId, '/drivers/<int:id>')

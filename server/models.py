@@ -38,8 +38,6 @@ class CarMeet(db.Model,SerializerMixin):
     tier_2_tickets = db.Column(db.Integer)
     tier_3_tickets = db.Column(db.Integer)
 
-    drivers = association_proxy('spots', 'driver', creator= lambda driver_obj: Spot(driver  = driver_obj))
-
     spots = db.relationship('Spot', back_populates = 'car_meet')
 
     def __repr__(self):
@@ -56,7 +54,6 @@ class Spot(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key = True)
     grade = db.Column(db.Integer)
-    reserved = db.Column(db.Boolean)
     meet_name = db.Column(db.String)
 
     driver_id = db.Column(db.Integer, db.ForeignKey('drivers.id'))
@@ -84,7 +81,6 @@ class Driver(db.Model,SerializerMixin):
     color = db.Column(db.String)
 
     cars = db.relationship('Car', back_populates = 'driver')
-    car_meets = association_proxy('spots', 'car_meet', creator= lambda meet_obj: Spot(meet  = meet_obj))
     spots = db.relationship('Spot', back_populates = 'driver')
 
     
