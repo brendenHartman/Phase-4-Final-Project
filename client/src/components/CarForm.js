@@ -7,10 +7,13 @@ function CarForm({formikCar}){
     return (
         <div id="carFormDiv">
             <form id="carForm" onSubmit={handleSubmit}>
+                <label htmlFor='make'>Make:</label>
                 <input className='carFormInput' id='make' onChange={handleChange} value={values.make}/>
                 <p>{formik.errors.make}</p>
+                <label htmlFor='Model'>Model:</label>
                 <input className='carFormInput' id='model' onChange={handleChange} value={values.model}/>
                 <p>{formik.errors.model}</p>
+                <label htmlFor='type'>Type:</label>
                 <select id='type' onChange={handleChange} value={values.type}>
                     <option value='Muscle' label='Muscle'>Muscle</option>
                     <option value='Super' label='Super'>Super</option>
