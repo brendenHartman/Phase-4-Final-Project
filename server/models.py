@@ -20,7 +20,7 @@ class Car(db.Model,SerializerMixin):
     driver = db.relationship('Driver', back_populates = 'cars')
 
     def __repr__(self):
-        return f'<Car {self.id}, {self.make}, {self.model}, {self.type}>'
+        return f'[Car {self.id}, {self.make}, {self.model}, {self.type}]'
 
         
 #==========================================================================
@@ -41,7 +41,7 @@ class CarMeet(db.Model,SerializerMixin):
     spots = db.relationship('Spot', back_populates = 'car_meet')
 
     def __repr__(self):
-        return f'<Meet {self.id}, {self.type}, {self.start_date} to {self.end_date}>'
+        return f'[Meet {self.id}, {self.name}, type: {self.type}]'
 
 
 #==========================================================================
@@ -54,7 +54,6 @@ class Spot(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key = True)
     grade = db.Column(db.Integer)
-    meet_name = db.Column(db.String)
 
     driver_id = db.Column(db.Integer, db.ForeignKey('drivers.id'))
     driver =  db.relationship('Driver', back_populates = 'spots')
@@ -63,7 +62,7 @@ class Spot(db.Model, SerializerMixin):
     car_meet = db.relationship('CarMeet', back_populates = 'spots')
 
     def __repr__(self):
-        return f'<Spot {self.id}, {self.grade}, {self.driver_id}, {self.car_meet_id}>'
+        return f'[Spot {self.id}, Tier: {self.grade}, Driver: {self.driver.username}, Meet: {self.car_meet.name}]'
 
 
 #==========================================================================
@@ -85,4 +84,4 @@ class Driver(db.Model,SerializerMixin):
 
     
     def __repr__(self):
-        return f'<Driver {self.id}, {self.username}, {self.color}>'
+        return f'[Driver {self.id}, Username: {self.username}, Color: {self.color}]'

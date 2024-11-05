@@ -135,15 +135,15 @@ class DriverId(Resource):
             if meet:
                 tier  = request.get_json()['tier']
                 if tier == "1" and meet.tier_1_tickets > 0:
-                    spot = Spot(driver=driver, car_meet=meet, grade=tier, reserved=True, meet_name=meet.name)
+                    spot = Spot(driver=driver, car_meet=meet, grade=tier)
                     db.session.add(spot)
                     db.session.commit()
                 if tier == "2" and meet.tier_2_tickets > 0:
-                    spot = Spot(driver=driver, car_meet=meet, grade=tier, reserved=True, meet_name=meet.name)
+                    spot = Spot(driver=driver, car_meet=meet, grade=tier)
                     db.session.add(spot)
                     db.session.commit()
                 if tier == "3" and meet.tier_3_tickets > 0:
-                    spot = Spot(driver=driver, car_meet=meet, grade=tier, reserved=True, meet_name=meet.name)
+                    spot = Spot(driver=driver, car_meet=meet, grade=tier)
                     db.session.add(spot)
                     db.session.commit()
                 return driver.to_dict(), 200
